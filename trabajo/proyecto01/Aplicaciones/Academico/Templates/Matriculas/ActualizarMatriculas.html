@@ -1,0 +1,78 @@
+{% extends './base.html' %}
+{% block title %}
+    Gestion de Matriculas
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Gestion de Matrículas</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/edicionmatricula" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="id" id="id "placeholder="ID" value="{{ id }}" readonly></input>
+                    </div>
+                    <div class="form-floating">
+                        <select class="form-select" id="curso"  name="curso"aria-label="Floating label select example">
+                            {% for c in cursos %}
+                                {{c}}
+                                {% if  c == matricula.idCurso %}
+                                    <option value="{{c.nombre}}" selected>{{c.nombre}}</option>
+                                {% else %}
+                                    <option value="{{c.nombre}}">{{c.nombre}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        
+                        <label for="floatingSelect">Curso</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="date" id="date" name="date" placeholder="Fecha Matricula" class="form-control" value="{{ fecha }}" required></input>
+                        <label for="floatingFechaIngreso">Fecha de Matricula</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="number" id="numCuotas" name="numCuotas" value="{{ cuotas }}" class="form-control" required></input>
+                        <label for="floatingCreditos">Cuotas</label>
+                    </div> 
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success form-control">Guardar</button>
+                    </div>
+                </form> 
+            </div>
+          </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de Matriculas</h1>
+        <div>
+            <div class="table-responsive py-2">
+                <table class="table table-primary">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>CURSO</th>
+                            <th>FECHA</th>
+                            <th>CUOTAS</th>
+                            <th colspan="2">Opciones de Manejo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for m in matriculas %}
+                        <tr>
+                            <td>{{m.idMatricula}}</td>
+                            <td>{{m.idCurso}}</td>
+                            <td>{{m.fechaMat}}</td>
+                            <td>{{m.cuotas}}</td>
+                            <td><a href="/datamatricula/{{m.idMatricula}}" class="btn btn-info">Editar</a></td>
+                            <td><a href="/eliminarmatricula/{{m.idMatricula}}" class="btn btn-danger">Eliminar</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

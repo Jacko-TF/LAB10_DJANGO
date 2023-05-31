@@ -1,0 +1,60 @@
+{% extends './base.html' %}
+{% block title %}
+    Gestion de Especialidades
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Actualizar Especialidades</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/edicionespecialidad" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="id" name="id" placeholder="ID" class="form-control" value="{{ especialidad.idEspecialidad }}" readonly></input>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtNombre" name="txtNombre" placeholder="Nombre" class="form-control" value="{{ especialidad.nombre }}" required></input>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtDescripcion" name="txtDescripcion" placeholder="Descripción" class="form-control" value="{{ especialidad.descripcion }}" required></input>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-info form-control">Actualizar</button>
+                    </div>
+                </form> 
+            </div>
+          </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de Especialidades</h1>
+        <div>
+            <div class="table-responsive py-2">
+                <table class="table table-primary">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th colspan="2">Opciones de Manejo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for e in especialidades %}
+                        <tr>
+                            <td>{{e.idEspecialidad}}</td>
+                            <td>{{e.nombre}}</td>
+                            <td>{{e.descripcion}}</td>
+                            <td><a href="/dataespecialidad/{{e.idEspecialidad}}" class="btn btn-info">Editar</a></td>
+                            <td><a href="/eliminarespecialidad/{{e.idEspecialidad}}" class="btn btn-danger">Eliminar</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

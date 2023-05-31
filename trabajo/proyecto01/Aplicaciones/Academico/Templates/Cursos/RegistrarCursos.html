@@ -1,0 +1,81 @@
+{% extends './base.html' %}
+{% block title %}
+    Gestion de Cursos
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Gestion de Cursos</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrarcurso" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="txtCodigo" name="txtCodigo" placeholder="Codigo" class="form-control" required></input>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtNombre" name="txtNombre" placeholder="Nombre" class="form-control" required></input>
+                    </div>
+                    <div class="form-floating">
+                        <input type="number" id="numCreditos" name="numCreditos" value="1" class="form-control" required></input>
+                        <label for="floatingCreditos">Créditos</label>
+                    </div> 
+                    <div class="form-floating">
+                        <select class="form-select" id="docente"  name="docente"aria-label="Floating label select example">
+                            {% for d in docente %}
+                            <option value="{{d.nombre}}">{{d.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="floatingSelect">Docente</label>
+                    </div>
+                    <div class="form-floating">
+                        <select class="form-select" id="especialidad" name="especialidad" aria-label="Floating label select example">
+                            {% for e in especialidad %}
+                                <option value="{{e.nombre}}">{{e.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="floatingSelect">Especialidad</label>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success form-control">Guardar</button>
+                    </div>
+                </form> 
+            </div>
+          </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de cursos</h1>
+        <div>
+            <div class="table-responsive py-2">
+                <table class="table table-primary">
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>Creditos</th>
+                            <th>Docente</th>
+                            <th>Especialidad</th>
+                            <th colspan="2">Opciones de Manejo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in cursos %}
+                        <tr>
+                            <td>{{c.codigo}}</td>
+                            <td>{{c.nombre}}</td>
+                            <td>{{c.creditos}}</td>
+                            <td>{{c.docente.nombre}}</td>
+                            <td>{{c.especialidad.nombre}}</td>
+                            <td><a href="/datacurso/{{c.codigo}}" class="btn btn-info">Editar</a></td>
+                            <td><a href="/eliminarcurso/{{c.codigo}}" class="btn btn-danger">Eliminar</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

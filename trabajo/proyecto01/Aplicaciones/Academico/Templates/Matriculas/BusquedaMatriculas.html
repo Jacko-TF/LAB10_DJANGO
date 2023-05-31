@@ -1,0 +1,52 @@
+{% extends './base.html' %}
+{% block title %}
+    Gestion de Matriculas
+{% endblock %}
+
+{% block body %}
+<div class="row">
+
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Búsqueda de Matriculas</h1>
+    
+        <form action="/busquedamatricula" method="POST">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                    <div class="form-group">
+                        <select class="form-select" name="date" id="date">
+                            {% for f in matricula_fechas %}
+                                <option value="{{f.fechaMat}}">{{f.fechaMat}}</option>
+                            {% endfor %}
+                        </select>                   
+                    </div>
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buscar</button>
+            </div>
+        </form>
+        <a class="btn btn-secondary" role="button" href="/busquedamatricula">Limpiar</a>
+        <div>
+            <div class="table-responsive py-2">
+                <table class="table table-primary">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>CURSO</th>
+                            <th>FECHA</th>
+                            <th>CUOTAS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for m in matriculas %}
+                        <tr>
+                            <td>{{m.idMatricula}}</td>
+                            <td>{{m.idCurso}}</td>
+                            <td>{{m.fechaMat}}</td>
+                            <td>{{m.cuotas}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

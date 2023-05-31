@@ -1,0 +1,76 @@
+{% extends './base.html' %}
+{% block title %}
+    Gestion de Docentes
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Gestion de Docentes</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/ediciondocente" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="ID" name="ID"  class="form-control" value ="{{ docente.idDocente }}" readonly></input>
+                    </div> 
+                    <div class="form-group">
+                        <input type="text" id="txtApellido" name="txtApellido" placeholder="Apellido" class="form-control" value ="{{ docente.apellido }}" required></input>
+                    </div> 
+                    <div class="form-group">
+                        <input type="text" id="txtNombre" name="txtNombre" placeholder="Nombre" class="form-control" value ="{{ docente.nombre }}" required></input>
+                    </div>
+                    <div class="form-floating">
+                        <input type="date" id="date" name="date" placeholder="Fecha Ingreso" class="form-control" value ="{{ fecha }}" required></input>
+                        <label for="floatingFechaIngreso">Fecha de Ingreso</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtDni" name="txtDni" placeholder="DNI" class="form-control" value ="{{ docente.dni }}"required></input>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtTelefono" name="txtTelefono" placeholder="Telefono" class="form-control" value ="{{ docente.telefono }}" required></input>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-info form-control">Actualizar</button>
+                    </div>
+                </form> 
+            </div>
+          </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Listado de Docentes</h1>
+        <div>
+            <div class="table-responsive py-2">
+                <table class="table table-primary">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                            <th>Fecha de Ingreso</th>
+                            <th>DNI</th>
+                            <th>Telefono</th>
+                            <th colspan="2">Opciones de Manejo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for d in docentes %}
+                        <tr>
+                            <td>{{d.idDocente}}</td>
+                            <td>{{d.apellido}}</td>
+                            <td>{{d.nombre}}</td>
+                            <td>{{d.fIngreso}}</td>
+                            <td>{{d.dni}}</td>
+                            <td>{{d.telefono}}</td>
+                            <td><a href="/datadocente/{{d.idDocente}}" class="btn btn-info">Editar</a></td>
+                            <td><a href="/eliminardocente/{{d.idDocente}}" class="btn btn-danger">Eliminar</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

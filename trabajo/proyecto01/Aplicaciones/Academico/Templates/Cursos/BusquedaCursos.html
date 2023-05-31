@@ -1,0 +1,47 @@
+{% extends './base.html' %}
+{% block title %}
+    Búsqueda de Cursos
+{% endblock %}
+
+{% block body %}
+<div class="row">
+
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Búsqueda de cursos</h1>
+        <div>
+            <form action="/busquedacurso" method="POST">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                        <input type="text" id ="nombre" name="nombre" class="form-control" placeholder="Nombre del curso" aria-label="Nombre del curso" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buscar</button>
+                </div>
+            </form>
+            <a class="btn btn-secondary" role="button" href="/busquedacurso">Limpiar</a>
+            <div class="table-responsive py-2">
+                <table class="table table-primary">
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>Creditos</th>
+                            <th>Docente</th>
+                            <th>Especialidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in cursos %}
+                        <tr>
+                            <td>{{c.codigo}}</td>
+                            <td>{{c.nombre}}</td>
+                            <td>{{c.creditos}}</td>
+                            <td>{{c.docente.nombre}}</td>
+                            <td>{{c.especialidad.nombre}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

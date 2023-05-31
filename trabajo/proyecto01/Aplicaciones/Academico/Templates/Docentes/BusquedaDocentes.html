@@ -1,0 +1,62 @@
+{% extends './base.html' %}
+{% block title %}
+    Gestion de Docentes
+{% endblock %}
+
+{% block body %}
+<div class="row">
+
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>Búsqueda de Docentes</h1>
+        <form action="/busquedadocente" method="POST">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                    <input type="text" id ="apellido" name="apellido" class="form-control" placeholder="Apellido del Docente" aria-label="Nombre del curso" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buscar</button>
+            </div>
+        </form>
+        <form action="/busquedadocente" method="POST">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                    <div class="form-group">
+                        <select class="form-select" name="date" id="date">
+                            {% for f in docente_fechas %}
+                                <option value="{{f.fIngreso}}">{{f.fIngreso}}</option>
+                            {% endfor %}
+                        </select>                   
+                    </div>
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buscar</button>
+            </div>
+        </form>
+        <a class="btn btn-secondary" role="button" href="/busquedadocente">Limpiar</a>
+        <div>
+            <div class="table-responsive py-2">
+                <table class="table table-primary">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                            <th>Fecha de Ingreso</th>
+                            <th>DNI</th>
+                            <th>Telefono</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for d in docentes %}
+                        <tr>
+                            <td>{{d.idDocente}}</td>
+                            <td>{{d.apellido}}</td>
+                            <td>{{d.nombre}}</td>
+                            <td>{{d.fIngreso}}</td>
+                            <td>{{d.dni}}</td>
+                            <td>{{d.telefono}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
